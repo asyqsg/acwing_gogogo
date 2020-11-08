@@ -49,35 +49,26 @@ class Sort:
         self.quick_sort_recommand(nums,j+1,r_index)
         return nums
 
-    def merge_sort(self,list1):
-        #归并排序
-        if len(list1) <= 1:
-            return
-        mid = len(list1) // 2
-        L = list1[:mid]
-        R = list1[mid:]
-        self.merge_sort(L)
-        self.merge_sort(R)
+    def qiuck_sort(self,nums,l,r):
+        if l >= r: return
 
-        i = j = k = 0
-        while i < len(L) and j < len(R):
-            if L[i] <= R[j]:
-                list1[k] = L[i]
-                i += 1
-            else:
-                list1[k] = R[j]
-                j += 1
-            k += 1
-        while i < len(L):
-            list1[k] = L[i]
-            k += 1
-            i += 1
-        while j < len(R):
-            list1[k] = R[j]
-            k += 1
-            j += 1
+        flag_num = nums[0]
+        i,j = l-1,r+1
+        while i < j:
+            while True:
+                i+=1
+                if nums[i] >= flag_num:
+                    break
 
-        return list1
+            while True:
+                j-=1
+                if nums[j] <= flag_num:
+                    break
+            if i < j:
+                nums[i],nums[j] = nums[j],nums[i]
+        self.qiuck_sort(nums,l,j)
+        self.quick_sort(nums,j+1,r)
+        return nums
 
 
 
