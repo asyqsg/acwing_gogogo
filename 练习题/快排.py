@@ -1,26 +1,27 @@
-def quick_sort(q,l,r):
-    if l>=r:
-        return
-    x = q[(l+r)//2]
+def quick_sort(nums:list,l:int,r:int):
+    if l >= r: return
+
+    flag_num = nums[r+l >> 1]
     i,j = l-1,r+1
-    while(i<j):
+    while i < j:
         while True:
             i+=1
-            if q[i]>=x:
+            if nums[i] >= flag_num:
                 break
         while True:
             j-=1
-            if q[j] <=x:
+            if nums[j] <= flag_num:
                 break
         if i < j:
-            q[i],q[j]=q[j],q[i]
+            nums[i],nums[j] = nums[j],nums[i]
 
-    quick_sort(q,l,j)
-    quick_sort(q,j+1,r)
+    quick_sort(nums,l,j)
+    quick_sort(nums,j+1,r)
 
 if __name__ == '__main__':
     n = int(input())
-    alist = list(map(int,input().split()))
-    quick_sort(alist,0,n-1)
-    for i in alist:
-        print(i,end = ' ')
+    nums = list(map(int,input().split()))
+    l,r = 0,n-1
+    quick_sort(nums,l,r)
+    for i in nums:
+        print(i,end=' ')

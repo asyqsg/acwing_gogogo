@@ -1,31 +1,29 @@
-def find_k(nums:list,l,r,k):
-    if l >= r: return nums[r]
+n, k = map(int, input().split())
+a = list(map(int, input().split()))
 
-    flag_num = nums[(l+r)//2]
-    i,j = l-1,r+1
-    while i<j:
-        while True:
-            i+=1
-            if nums[i] >= flag_num:
-                break
-        while True:
-            j-=1
-            if nums[j] <= flag_num:
-                break
+def quick_select(a, l, r, k):
+    if l >= r:
+        return a[l]
+    x = a[l + r >> 1]
+    i = l - 1
+    j = r + 1
+    while i < j:
+        i += 1
+        while a[i] < x:
+            i += 1
+
+        j -= 1
+        while a[j] > x:
+            j -= 1
+
         if i < j:
-            nums[i],nums[j] = nums[j],nums[i]
+            a[i], a[j] = a[j], a[i]
 
-        Sl = j-l+1
-        if k <= Sl:
-            return find_k(nums,l,j,k)
-        else:
-            k = k-Sl
-            return find_k(nums,j+1,r,k)
+    length = j - l + 1 # 左半区间的区间长度
+    if k <= length:
+        return quick_select(a, l, j, k)
+    else:
+        return quick_select(a, j+1, r, k-length)
 
-if __name__ == '__main__':
-    temp = list(map(int,input().split()))
-    n = temp[0]
-    k = temp[1]
-    if k > n: print(None)
-    nums = list(map(int,input().split()))
-    print(find_k(nums,0,n-1,k))
+res = quick_select(a, 0, n-1, k)
+print(res)
