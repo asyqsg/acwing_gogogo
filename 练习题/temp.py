@@ -1,28 +1,34 @@
-def merge_sort(nums):
-    size = len(nums)
-    if size < 2: return
-    l,r = 0,size-1
-    mid = [l+r >> 1]
-    L = nums[:mid]
-    R = nums[mid:]
-    merge_sort(L)
-    merge_sort(R)
+n, q = list(map(int, input().split()))
+nums = list(map(int, input().split()))
 
-    i,j,k = 0,0,0
-    while i < len(L) and j < len(R):
-        if L[i] < R[j]:
-            nums[k] = L[i]
-            i+=1
+
+def get_left(nums, k, l, r):
+    while l < r:
+        mid = (l + r) >> 1
+        if nums[mid] >= k:
+            r = mid
         else:
-            nums[k] = R[j]
-            j+=1
-        k+=1
-    while i < len(L):
-        nums[k] = L[i]
-        i+=1
-        k+=1
-    while j < len(R):
-        nums[k] = R[j]
-        k+=1
-        j+=1
-    return nums 
+            l = mid + 1
+    if nums[l] != k:
+        return -1
+    return l
+
+
+def get_right(nums, k, l, r):
+    while l < r:
+        mid = (l + r + 1) >> 1
+        if nums[mid] <= k:
+            l = mid
+        else:
+            r = mid - 1
+    if nums[r] != k:
+        return -1
+    return r
+
+
+if __name__ == '__main__':
+    for i in range(q):
+        k = int(input())
+        res = [get_left(nums, k, 0, n - 1), get_right(nums, k, 0, n - 1)]
+        for i in res:
+            print(i, end=' ')
